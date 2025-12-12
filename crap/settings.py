@@ -109,11 +109,12 @@ class Settings:
     MAC_MC_IPV6_MLDV2: str = "33:33:00:00:00:16"
     MAC_MC_IPV6_OSPF: str = "33:33:00:00:00:05"
     MAC_MC_VRRP: str = "01:00:5E:00:00:12"
+    MAC_MSTP: str = "01:80:C2:00:00:08"
     MAC_MULTICAST: str = "01:00:0C:CC:CC:CC"
-
     MAC_RPVSTP: str = "01:00:0C:CC:CC:CD"
+    MAC_RSTP: str = "01:80:C2:00:00:00"
     MAC_SLOW_PROTOCOLS: str = "01:80:C2:00:00:02"
-    MAC_STP: str = "01:80:C2:00:00:00"
+    MAC_STP: str = MAC_RSTP
     MAC_VRRP_V4_VRID: str = "00:00:5E:00:01:"
     MAC_VRRP_V6_VRID: str = "00:00:5E:00:02:"
     MAC_ZEROS: str = "00:00:00:00:00:00"
@@ -127,13 +128,34 @@ class Settings:
     MACSEC_ICVLEN: int = 16
     MACSEC_XPN_EN: bool = True
     MACSEC_SSCI: int = 0x7A30C118
-    MACSEC_SALT: bytes = b'\xE6\x30\xE8\x1A\x48\xDE\x86\xA2\x1C\x66\xFA\x6D'
+    MACSEC_SALT: bytes = b'\xe6\x30\xe8\x1a\x48\xde\x86\xa2\x1c\x66\xfa\x6d'
+
+    MSTP_BRDIGE_ID: int = 0x1000
+    MSTP_BPDU_AGE: int = 0
+    MSTP_BPDU_TYPE: int = 0x02
+    MSTP_FLAGS: int = 0x7C
+    MSTP_PORT_ID: int = 0x8001
+    MSTP_ROOT_ID: int = 0x1000
+    MSTP_STP_VERSION: int = 0x3
+    MSTP_PAYLOAD: str = (
+        "000003027c800000030000000100000000800000030000000180050000140002000f00"
+        "0000500000000000000000000000000000000000000000000000000000000000000000"
+        "00000055bf4e8a44b25d442868549c1bf7720f00030d408000001aa197d180137c8005"
+        "00030000000100030d40808013"
+    )
+
+    RSTP_BRDIGE_ID: int = 0x8001
+    RSTP_BPDU_AGE: int = 0
+    RSTP_BPDU_TYPE: int = 0x02
+    RSTP_FLAGS: int = 0x3C
+    RSTP_PORT_ID: int = 0x8001
+    RSTP_ROOT_ID: int = 0x8001
+    RSTP_STP_VERSION: int = 0x2
 
     RPVSTP_BRDIGE_ID: int = 0x8005
     RPVSTP_BPDU_AGE: int = 0
     RPVSTP_BPDU_TYPE: int = 0x02
     RPVSTP_CODE: int = 0x010B
-    RPVSTP_CTRL: int = 0x03
     RPVSTP_DSAP: int = 0xAA
     RPVSTP_FLAGS: int = 0x0E
     RPVSTP_OUI: int = 0x00000C
@@ -148,8 +170,11 @@ class Settings:
 
     STP_AGE: int = 0
     STP_BRDIGE_ID: int = 0x8001
+    STP_CTRL: int = 0x03
+    STP_DSAP: int = 0x42
     STP_PORT_ID: int = 0x8001
     STP_ROOT_ID: int = 0x8001
+    STP_SSAP: int = 0x42
 
     """
     Layer 3 constants
