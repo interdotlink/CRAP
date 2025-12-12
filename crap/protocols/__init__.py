@@ -25,6 +25,7 @@ from .lldp import Lldp
 from .macsec import MacSec
 from .mldv2_query import MldV2Query
 from .mldv2_report import MldV2Report
+from .mstp import Mstp
 from .multicast_ipv4 import MulticastV4
 from .multicast_ipv6 import MulticastV6
 from .ospfv2_hello import OspfV2Hello
@@ -33,6 +34,7 @@ from .ospfv3_hello import OspfV3Hello
 from .ospfv3_lsa import OspfV3Lsa
 from .rarp import Rarp
 from .rpvstp import Rpvstp
+from .rstp import Rstp
 from .slow_protocols import SlowProtocols
 from .snap import Snap
 from .stp import Stp

@@ -28,7 +28,7 @@ The following output shows the traffic types CRAP can generated. See the [Protoc
 ```shell
 $ python3 ./crap.py -h
 usage: crap.py [-h] [-c COUNT] [-i INTERFACE] [-n] [-p PCAP] [-r] [-u] [--l2-qos L2_QOS] [--l3-qos L3_QOS] [-q QINQ] [-v VLAN]
-               (--l2-arp | --l2-cdp | --l2-cfm | --l2-isis-l1-hello | --l2-isis-l2-hello | --l2-lacp | --l2-lldp | --l2-macsec | --l2-rarp | --l2-rpvstp | --l2-stp | --l3-bfdasync | --l3-bfdcontrol | --l3-bfdecho | --l3-bfdmicro | --l3-bgp | --l3-eigrp2v4hello | --l3-eigrp2v6hello | --l3-icmpv4echorequest | --l3-icmpv4echoreply | --l3-icmpv6echorequest | --l3-icmpv6echoreply | --l3-igmpv3query | --l3-igmpv3report | --l3-mldv2query | --l3-mldv2report | --l3-multicastv4 | --l3-multicastv6 | --l3-ospfv2hello | --l3-ospfv2lsa | --l3-ospfv3hello | --l3-ospfv3lsa | --l3-vrrpv2 | --l3-vrrpv3)
+               (--l2-arp | --l2-cdp | --l2-cfm | --l2-isis-l1-hello | --l2-isis-l2-hello | --l2-lacp | --l2-lldp | --l2-macsec | --l2-mstp | --l2-rarp | --l2-rstp | --l2-rpvstp | --l2-stp | --l3-bfdasync | --l3-bfdcontrol | --l3-bfdecho | --l3-bfdmicro | --l3-bgp | --l3-eigrp2v4hello | --l3-eigrp2v6hello | --l3-icmpv4echorequest | --l3-icmpv4echoreply | --l3-icmpv6echorequest | --l3-icmpv6echoreply | --l3-igmpv3query | --l3-igmpv3report | --l3-mldv2query | --l3-mldv2report | --l3-multicastv4 | --l3-multicastv6 | --l3-ospfv2hello | --l3-ospfv2lsa | --l3-ospfv3hello | --l3-ospfv3lsa | --l3-vrrpv2 | --l3-vrrpv3)
 
 Create RAndom Packets - Send and receive packets using Scapy
 
@@ -66,8 +66,10 @@ Traffic Type:
   --l2-lacp             LACP message (default: False)
   --l2-lldp             LLDP message (default: False)
   --l2-macsec           MacSec message (default: False)
+  --l2-mstp             Multiple STP message (default: False)
   --l2-rarp             ARP response (default: False)
-  --l2-rpvstp           Rapid Per-VLAN STP message (default: False)
+  --l2-rstp             Rapid STP message (default: False)
+  --l2-rpvstp           Rapid Per-VLAN STP (PVST+) message (default: False)
   --l2-stp              STP message (default: False)
   --l3-bfdasync         BFD message (async Mode) (default: False)
   --l3-bfdcontrol       BFD Control message (default: False)
@@ -263,6 +265,7 @@ The following table provides a definition of the of different protocols.
 | MACSec             | Ethernet II            | Unicast Source  | Unicast Destination   | 0x88E5    | None     | IEEE 802.1AE |
 | MLDv2 Query        | Ethernet II            | Unicast Source  | Multicast Destination | 0x86DD    | None     | ICMPv6 packet with IPv6 multicast destination address (FF02::16) and matching multicast destination MAC. |
 | MLDv2 Report       | Ethernet II            | Unicast Source  | Multicast Destination | 0x86DD    | None     | ICMPv6 packet with IPv6 multicast destination address (FF02::16) and matching multicast destination MAC. |
+| MSTP               | IEEE 802.3 + LLC       | Unicast Source  | 01:80:C2:00:00:08     | None      | DSAP 0x42, SSAP 0x42 | IEEE 802.1s, IEEE 802.1q-2014 |
 | OAM                | Ethernet II            |                 | 01:80:C2:00:00:02     | 0x8809    | None     | IEEE 802.3ah Ethernet OAM uses the same destination MAC and Ethertype as LACP. |
 | OSPFv2 Hello       | Ethernet II            | Unicast Source  | Multicast Destination | 0x0800    | None     | IPv4 packets with a multicast destination IP (224.0.0.5) and matching multicast destination MAC. |
 | OSPFv2 LSA         | Ethernet II            | Unicast Source  | Multicast Destination | 0x0800    | None     | IPv4 packets with a multicast destination IP (224.0.0.5) and matching multicast destination MAC. |
@@ -271,7 +274,8 @@ The following table provides a definition of the of different protocols.
 | <s>Pause Frame</s> | Ethernet II            |                 | 01:80:C2:00:00:01     | 0x8808    | None     | IEEE 802.3x Ethernet Flow Control. **These must not be transported across the service as per the standard.** |
 | PVST+              | IEEE 802.3 + LLC       | Unicast Source  | 01:00:0C:CC:CC:CD     | None      | DSAP 0xAA, SSAP 0xAA, OUI: 0x00000C, protocol ID: 0x010b | Rapid Per-VLAN Spanning Tree |
 | RARP               | Ethernet II            | Unicast Source  | Unicast Destination   | 0x8035    | None     | IPv4 ARP reply from unicast source MAC, to unicast destination MAC |
-| STP/RSTP/MSTP      | IEEE 802.3 + LLC       | Unicast Source  | 01:80:C2:00:00:00     | None      | DSAP 0x42, SSAP 0x42 | IEEE 802.1D, IEEE 802.1w, IEEE 802.1s, IEEE 802.1q-2014 |
+| STP                | IEEE 802.3 + LLC       | Unicast Source  | 01:80:C2:00:00:00     | None      | DSAP 0x42, SSAP 0x42 | IEEE 802.1D, IEEE 802.1q-2014 |
+| RSTP               | IEEE 802.3 + LLC       | Unicast Source  | 01:80:C2:00:00:00     | None      | DSAP 0x42, SSAP 0x42 | IEEE 802.1w, IEEE 802.1q-2014 |
 | UDLD               | IEEE 802.3 + LLC + SNAP| Unicast Source  | 01:00:0C:CC:CC:CC     | None      | DSAP 0xAA, SSAP 0xAA, OUI: 0x00000C, protocol ID: 0x0111 | Unidirection Link Detection Protocol |
 | VLAN               | Ethernet II            | Any             | Any                   | 0x8100    | None     | Single- and double-VLAN tagged frames. |
 | VRRP v2            | Ethernet II            | 00:00:5E:00: + VRRP GRP ID | 01:00:5E:00:00:12 | 0x0800 | None | IPv4 packets with a unicast source IP and multicast destination IP (224.0.0.18) |
