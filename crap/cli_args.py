@@ -1,7 +1,6 @@
 from __future__ import annotations
 
 import argparse
-import typing
 from typing import Any
 
 from crap.protocols import *
@@ -68,12 +67,20 @@ class CliArgs:
         CliArgs.frame_types["l2_macsec"] = CliArg(
             cli_arg="--l2-macsec", desc="MacSec message", hdr=MacSec()
         )
+        CliArgs.frame_types["l2_mstp"] = CliArg(
+            cli_arg="--l2-mstp", desc="Multiple STP message", hdr=Mstp()
+        )
         CliArgs.frame_types["l2_rarp"] = CliArg(
             cli_arg="--l2-rarp", desc="ARP response", hdr=Rarp()
         )
+        CliArgs.frame_types["l2_rstp"] = CliArg(
+            cli_arg="--l2-rstp",
+            desc="Rapid STP message",
+            hdr=Rstp(),
+        )
         CliArgs.frame_types["l2_rpvstp"] = CliArg(
             cli_arg="--l2-rpvstp",
-            desc="Rapid Per-VLAN STP message",
+            desc="Rapid Per-VLAN STP (PVST+) message",
             hdr=Rpvstp(),
         )
         CliArgs.frame_types["l2_stp"] = CliArg(

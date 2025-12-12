@@ -25,7 +25,7 @@ class Rpvstp(BaseHeader):
         )
 
         """
-        No support in Scapy for RPVSTP/PVST+. Add the TLV details manually.
+        No support in Scapy for RPVSTP. Add the TLV details manually.
 
         If a VLAN ID is being used, we need to re-write the last byte the
         the VLAN originating TLV to match the VLAN ID.
@@ -46,20 +46,22 @@ class Rpvstp(BaseHeader):
         )
         self.insert_at_bottom(
             Llc(
-                ctrl=Settings.RPVSTP_CTRL,
+                ctrl=Settings.STP_CTRL,
                 dsap=Settings.RPVSTP_DSAP,
                 ssap=Settings.RPVSTP_SSAP,
             )
         )
 
-        # Off-set to LLC protocol ID
+        """
+        Off-set to LLC protocol ID
+        """
         if Settings.VLAN:
             self.set_filter(
-                f" and ether[24:2] = {hex(Settings.LLC_PROTO_ID_RPVSTP)}"
+                f" and ether[20:2] = {hex(Settings.LLC_PROTO_ID_RPVSTP)}"
             )
         else:
             self.set_filter(
-                f" and ether[20:2] = {hex(Settings.LLC_PROTO_ID_RPVSTP)}"
+                f" and ether[20:2] = {hex(Settings.LLC_PROTO_ID_RPVSTP)} and not vlan"
             )
 
         length = self.get_stack_length()
