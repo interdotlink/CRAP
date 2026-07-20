@@ -241,8 +241,8 @@ sudo ip link del veth0 type veth peer name veth1
 The following table provides a definition of the of different protocols.
 
 | Control Protocol   | Format                 | Src Mac         | Dst MAC               | Ethertype | LLC/SNAP | Description |
-| ------------------ | ---------------------- | --------------- |  -------------------- | --------- | -------- | ----------- |
-| ARP                | Ethernet II            | Unicast Source  | 00:00:00:00:00:00     | 0x0806    | None     | IPv4 ARP broadcast |
+| ------------------ | ---------------------- | --------------- | --------------------- | --------- | -------- | ----------- |
+| ARP                | Ethernet II            | Unicast Source  | FF:FF:FF:FF:FF:FF     | 0x0806    | None     | IPv4 ARP broadcast |
 | BFD Control        | Ethernet II            | Unicast Source  | Unicast Destination   | 0x0800    | None     | BFD Control packet over IPv4 with unicast source and destination IPs |
 | BFD Control (Micro-BFD) | Ethernet II       | Unicast Source  | 01:00:5E:90:00:01     | 0x0800    | None     | BFD Control packet for Micro-BFD (BoB) over IPv4 with unicast source and destination IPs, to multicast destination MAC. |
 | BFD Echo           | Ethernet II            | Unicast Source  | Unicast Destination   | 0x0800    | None     | BFD Echo packet over IPv4 with own unicast address as source and destination IPs |
